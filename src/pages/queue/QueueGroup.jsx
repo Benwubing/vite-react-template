@@ -18,13 +18,14 @@ export default function QueueGroup(props) {
           src="https://react.semantic-ui.com/images/avatar/small/elliot.jpg"
           alt="default"
         />
-        {m.contact_value ? m.contact_value : "Guest"}
+        {m.contact_value && m.contact_value!=="none" ? m.contact_value : "Guest"}
       </Label>
     );
   });
 
   return (
-    <Card fluid color="green">
+
+    <Card  color="green">
       <Card.Content>
         <Card.Header>
           {!alt && (
@@ -82,5 +83,6 @@ export default function QueueGroup(props) {
         </Card.Description>
       </Card.Content>
     </Card>
+  
   );
 }

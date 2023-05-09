@@ -117,7 +117,7 @@ export default function JoinQueue() {
   if (existingData === undefined || existingData.result === "new") {
     return (
       <Grid columns={4} centered padded>
-        <Grid.Column textAlign="center">
+        <Grid.Column textAlign="center" mobile={12} table={12} computer={4}>
           <Card>
             <Card.Content>
               <Card.Header>Join the queue!</Card.Header>
@@ -219,7 +219,7 @@ export default function JoinQueue() {
 
   return (
     <Grid columns={4} centered padded>
-      <Grid.Column textAlign="center">
+      <Grid.Column textAlign="center" mobile={12} table={12} computer={4}>
         <Card>
           <Card.Content>
             <Card.Header>
