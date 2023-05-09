@@ -1,24 +1,31 @@
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Login from "./pages/user/Login";
+import Register from "./pages/user/Register";
+import Home from "./pages/queue/Home";
+import { QueryClient, QueryClientProvider } from "react-query";
+import JoinQueue from "./pages/queue/JoinQueue";
+import LeaveQueue from "./pages/leave/LeaveQueue";
+import QueueDisplay from "./pages/queue/QueueDisplay";
+
+const queryClient = new QueryClient();
 
 function App() {
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <p>Choo Choo! This is an example of a Vite + React app running on Railway.</p>
-      </div>
-    </>
-  )
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/register" element={<Register />}></Route>
+          <Route path="/leave" element={<LeaveQueue />}></Route>
+          <Route path="/join/:id/:hash" element={<JoinQueue />}></Route>
+          <Route path="/join/:id/:hash/:group" element={<JoinQueue />}></Route>
+          <Route path="/display/:id" element={<QueueDisplay />}></Route>
+          {/* <Route path="/view/:id" element={<ViewQueue />}></Route> */}
+          <Route path="/home" element={<Home />}></Route>
+          <Route path="/login" element={<Login />}></Route>
+          <Route path="/" element={<Login />}></Route>
+        </Routes>
+      </BrowserRouter>
+    </QueryClientProvider>
+  );
 }
-
-export default App
+export default App;
