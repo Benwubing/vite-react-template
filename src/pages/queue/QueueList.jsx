@@ -18,9 +18,12 @@ import QueueActions from "./QueueActions";
 import React from "react";
 import AddQueueModal from "./AddQueueModal";
 import { Link } from "react-router-dom";
+import TopNavBar from "../../components/TopNavBar";
 
-export default function QueueList(props) {
-  const { onSelectQueue } = props;
+export default function QueueList() {
+    if (!localStorage.getItem("token")) {
+    return <Navigate to="/login" />;
+  }
   const { data, isLoading, refetch } = useQuery(
     "getQueues",
     () =>
@@ -50,7 +53,7 @@ export default function QueueList(props) {
             return (
               <TableRow key={r.id}>
                 <TableCell>
-                  <Link onClick={() => onSelectQueue(r.id)}>{attr.name}</Link>
+                  <Link to={"/view/"+r.id}>{attr.name}</Link>
                 </TableCell>
                 <TableCell>{attr.groups.length}</TableCell>
                 <TableCell>{attr.next_in_line}</TableCell>
@@ -80,6 +83,7 @@ export default function QueueList(props) {
       : [];
   return (
     <div>
+      <TopNavBar/>
       <Header as="h1">My Queues</Header>
       <Divider />
 

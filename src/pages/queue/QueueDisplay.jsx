@@ -97,7 +97,7 @@ export default function QueueDisplay() {
     queue_hash;
 
   return (
-    <Segment padded textAlign="center">
+    <Segment padded textAlign="center" basic >
       <Segment >
         <Statistic size="huge" >
           <Statistic.Label>Currently Serving</Statistic.Label>
@@ -108,7 +108,7 @@ export default function QueueDisplay() {
         <Header as="h2"> Number might not be called in sequence</Header>
       </Segment>
       <Grid columns={2}>
-        <Grid.Column>
+        <Grid.Column phone={16} tablet={8} computer={8}>
           <Segment inverted color="yellow">
             <Statistic size="huge">
               <Statistic.Label>Estimated wait time</Statistic.Label>
@@ -116,7 +116,7 @@ export default function QueueDisplay() {
             </Statistic>
           </Segment>
         </Grid.Column>
-        <Grid.Column>
+        <Grid.Column phone={16} tablet={8} computer={8}>
           <Segment inverted color="black">
             <Statistic size="huge" inverted>
               <Statistic.Label>Groups in Queue</Statistic.Label>

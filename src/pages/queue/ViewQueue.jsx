@@ -13,10 +13,12 @@ import Loading from "../../components/Loading";
 import QueueGroup from "./QueueGroup";
 import { useState } from "react";
 import QueueActions from "./QueueActions";
+import { useNavigate, useParams } from "react-router-dom";
 
 export default function ViewQueue(props) {
-  const { id, onBack } = props;
+  const { id } = useParams();
   const [errors, setErrors] = useState();
+  const navigate=useNavigate();
 
   const { data, isLoading, refetch } = useQuery("getDetails", async () => {
     const { data } = await QueueService.getQueue(id);
@@ -82,9 +84,9 @@ export default function ViewQueue(props) {
         ];
 
   return (
-    <div>
+    <Segment basic >
       <Breadcrumb>
-        <Breadcrumb.Section onClick={onBack} link>
+        <Breadcrumb.Section onClick={()=>navigate("/home")} link>
           My Queues
         </Breadcrumb.Section>
         <Breadcrumb.Divider />
@@ -93,10 +95,10 @@ export default function ViewQueue(props) {
       <br />
       <br />
       <Grid columns={2}>
-        <Grid.Column mobile={16} tablet={8} computer={8}>
+        <Grid.Column mobile={16} tablet={8} computer={12}>
           <Header as="h1">{data.name}</Header>
         </Grid.Column>
-        <Grid.Column textAlign="right" mobile={16} tablet={8} computer={8}>
+        <Grid.Column  mobile={16} tablet={8} computer={4}>
           <QueueActions queue={data} refreshList={refetch} />
         </Grid.Column>
       </Grid>
@@ -150,14 +152,14 @@ export default function ViewQueue(props) {
             {inQueue}
           </Segment>
         </Grid.Column>
-        <Grid.Column>
-          <Segment mobile={16} computer={8} tablet={8}>
+        <Grid.Column mobile={16} computer={8} tablet={8}>
+          <Segment >
             <Header as="h2">Out Queue</Header>
             <Divider />
             {outQueue}
           </Segment>
         </Grid.Column>
       </Grid>
-    </div>
+    </Segment>
   );
 }

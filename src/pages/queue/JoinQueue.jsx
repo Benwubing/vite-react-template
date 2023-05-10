@@ -217,6 +217,8 @@ export default function JoinQueue() {
       ""
     );
 
+    const notServing = existingData.position_in_queue !== existingData.currently_serving
+
   return (
     <Grid columns={4} centered padded>
       <Grid.Column textAlign="center" mobile={12} table={12} computer={4}>
@@ -224,9 +226,7 @@ export default function JoinQueue() {
           <Card.Content>
             <Card.Header>
               {existingData.active && <p> You have joined the queue! </p>}
-              {!existingData.active && (
-                <p> Your number has already been called </p>
-              )}
+            
             </Card.Header>
             <Card.Description>
               <Statistic>
@@ -236,6 +236,10 @@ export default function JoinQueue() {
                 <Statistic.Label>Queue Number</Statistic.Label>
               </Statistic>
               <br />
+
+                {!existingData.active && notServing && (
+                <p> Your number has already been called </p>
+              )}
               {groupQR}
 
               <Divider />
@@ -246,12 +250,18 @@ export default function JoinQueue() {
                 </Button>
               )}
 
-              {!existingData.active && (
-                <p>
-                  {" "}
-                  If you missed your queue, please approach the staff to be set
-                  back into the queue{" "}
-                </p>
+                {!notServing && (
+                  <Message success>
+                    <Message.Header>Your turn is here!</Message.Header>
+                    <p>Please approach staff right now.</p>
+                  </Message>
+                )}
+
+              {!existingData.active && notServing && (
+                 <Message warning>
+                    <Message.Header>Missed your queue?</Message.Header>
+                    <p>If you missed your queue, please approach the staff to be set back into the queue.</p>
+                  </Message>
               )}
 
               {existingData.active && (
@@ -262,9 +272,9 @@ export default function JoinQueue() {
                       Leave Queue
                     </Button>
                   }
-                  message={"Are you sure you want to leave the queue?"}
+                  message={"Are you sure you want to exit the queue?"}
                   title="Leave Queue"
-                  subtitle="You are about to leave"
+                  subtitle=""
                   cancelText="Close"
                   onConfirm={onLeave}
                   confirmText={"Leave Queue"}
