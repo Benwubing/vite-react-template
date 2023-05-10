@@ -110,7 +110,7 @@ export default function Register() {
   };
 
   return (
-    <Segment padded>
+    <Segment padded basic>
       <Grid
         textAlign="center"
         style={{ height: "100vh" }}

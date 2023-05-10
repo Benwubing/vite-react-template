@@ -44,7 +44,7 @@ export default function Login() {
     }
   };
   return (
-    <Segment padded>
+    <Segment padded basic>
       <Grid
         textAlign="center"
         style={{ height: "100vh" }}
