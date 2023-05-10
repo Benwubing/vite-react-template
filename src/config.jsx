@@ -10,5 +10,6 @@ const config = {
   leave_queue: "/participate/",
   exist_in_queue: "/participate/",
   enroll_display: "/display/",
+  delete_groups:"/group/"
 };
 export default config;

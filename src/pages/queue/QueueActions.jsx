@@ -72,6 +72,19 @@ export default function QueueActions(props) {
       });
   };
 
+  const onClear = () => {
+    setLoading(true);
+    QueueService.deleteGroups(queue.id)
+      .then((res) => {
+        setLoading(false);
+        refreshList();
+      })
+      .catch((e) => {
+        console.log(e);
+        setLoading(false);
+      });
+  };
+
   const handleDisplay = ()=>{
     var win = window.open("/display/"+queue.id, '_blank');
     win.focus();
@@ -84,6 +97,7 @@ export default function QueueActions(props) {
         size="mini"
         button={
           <Button
+            className="mb-1"
             size="small"
             color="blue"
             disabled={loading}
@@ -99,6 +113,7 @@ export default function QueueActions(props) {
         size="mini"
         button={
           <Button
+          className="mb-1"
             size="small"
             color="green"
             disabled={loading}
@@ -116,11 +131,12 @@ export default function QueueActions(props) {
         size="mini"
         button={
           <Button
+          className="mb-1"
             size="small"
             color="red"
             disabled={loading}
           >
-            <Icon name="delete"/> Delete
+            <Icon name="trash"/> Delete
           </Button>
         }
         message={""}
@@ -131,7 +147,27 @@ export default function QueueActions(props) {
         onConfirm={onDelete}
         confirmText={"Delete"}
       />
-      <Button color="purple" size={"small"} onClick={handleDisplay}>
+      <MessageModal
+        size="mini"
+        button={
+          <Button
+          className="mb-1"
+            size="small"
+            color="black"
+            disabled={loading}
+          >
+            <Icon name="eraser"/> Clear Queue
+          </Button>
+        }
+        message={""}
+        title="Clear Queue"
+        subtitle="Are you sure you want to clear all groups in this queue?"
+        cancelText="Close"
+        color="red"
+        onConfirm={onClear}
+        confirmText={"Yes, clear all groups"}
+      />
+      <Button color="purple" className="mb-1" size={"small"} onClick={handleDisplay}>
        <Icon name="tv"/> Queue 
       </Button>
     </div>

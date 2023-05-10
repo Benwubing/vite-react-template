@@ -50,3 +50,7 @@ code {
 .max-height{
   height:100vh;
 }
+
+.mb-1{
+  margin-bottom: 0.4rem !important;
+}

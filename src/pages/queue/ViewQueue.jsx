@@ -95,10 +95,10 @@ export default function ViewQueue(props) {
       <br />
       <br />
       <Grid columns={2}>
-        <Grid.Column mobile={16} tablet={8} computer={12}>
+        <Grid.Column mobile={16} tablet={8} computer={10}>
           <Header as="h1">{data.name}</Header>
         </Grid.Column>
-        <Grid.Column  mobile={16} tablet={8} computer={4}>
+        <Grid.Column  mobile={16} tablet={8} computer={6} textAlign="right">
           <QueueActions queue={data} refreshList={refetch} />
         </Grid.Column>
       </Grid>

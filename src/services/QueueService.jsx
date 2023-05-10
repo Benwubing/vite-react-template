@@ -111,6 +111,9 @@ const QueueService = {
   getDisplay(id, device) {
     return axios.get(config.enroll_display + id + "/" + device + "/");
   },
+  deleteGroups(id){
+    return authInstance.delete(config.delete_groups+id+"/", getHeaders());
+  }
 };
 
 export default QueueService;
