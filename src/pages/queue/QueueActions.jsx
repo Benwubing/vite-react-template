@@ -1,13 +1,13 @@
 import QRCode from "react-qr-code";
-import { Button, Segment, Input, Icon } from "semantic-ui-react";
+import { Button, Segment, Input, Icon,Grid } from "semantic-ui-react";
 import MessageModal from "../../components/MessageModal";
 import QueueService from "../../services/QueueService";
-import { useRef, useState } from "react";
+import { useState } from "react";
+import { TelegramShareButton,TelegramIcon, WhatsappShareButton, WhatsappIcon, EmailShareButton, EmailIcon } from "react-share";
 
 export default function QueueActions(props) {
   const { queue, refreshList } = props;
   const [loading, setLoading] = useState(false);
-  const qrInput = useRef(null);
 
   let queue_hash = "";
   if (queue.attributes) {
@@ -22,23 +22,27 @@ export default function QueueActions(props) {
     "/" +
     queue_hash;
 
-  const handleCopy = () => {
-    navigator.clipboard.writeText(qrURL);
-    qrInput.current.select();
-    document.execCommand("copy");
-  };
-
   const QRdisplay = (
     <Segment padded textAlign="center">
       <QRCode value={qrURL}></QRCode>
-      <Input
-        fluid
-        ref={qrInput}
-        icon={<Icon name="copy" link />}
-        placeholder="QR code"
-        onClick={handleCopy}
-        value={qrURL}
-      />
+      <Grid padded centered>
+        <Grid.Column width={3}>
+          <TelegramShareButton url={qrURL} title="Join the queue :">
+            <TelegramIcon size={32} round/>
+          </TelegramShareButton>
+        </Grid.Column>
+        <Grid.Column width={3}>
+          <WhatsappShareButton url={qrURL} title="Join the queue :">
+            <WhatsappIcon size={32} round/>
+          </WhatsappShareButton>
+        </Grid.Column>
+          <Grid.Column width={3}>
+          <EmailShareButton url={qrURL} title="Join the queue :">
+            <EmailIcon size={32} round/>
+          </EmailShareButton>
+        </Grid.Column>
+      </Grid>
+     
     </Segment>
   );
 
@@ -68,17 +72,22 @@ export default function QueueActions(props) {
       });
   };
 
+  const handleDisplay = ()=>{
+    var win = window.open("/display/"+queue.id, '_blank');
+    win.focus();
+
+  }
+
   return (
     <div>
       <MessageModal
         size="mini"
         button={
           <Button
-            icon="qrcode"
             size="small"
             color="blue"
             disabled={loading}
-          ></Button>
+          ><Icon name="qrcode"/>QR</Button>
         }
         message={QRdisplay}
         title="Join Queue"
@@ -90,11 +99,10 @@ export default function QueueActions(props) {
         size="mini"
         button={
           <Button
-            icon="refresh"
             size="small"
             color="green"
             disabled={loading}
-          ></Button>
+          ><Icon name="refresh"/>Refresh QR</Button>
         }
         message={""}
         title="Refresh QR"
@@ -108,11 +116,12 @@ export default function QueueActions(props) {
         size="mini"
         button={
           <Button
-            icon="delete"
             size="small"
             color="red"
             disabled={loading}
-          ></Button>
+          >
+            <Icon name="delete"/> Delete
+          </Button>
         }
         message={""}
         title="Delete Queue"
@@ -122,6 +131,9 @@ export default function QueueActions(props) {
         onConfirm={onDelete}
         confirmText={"Delete"}
       />
+      <Button color="purple" size={"small"} onClick={handleDisplay}>
+       <Icon name="tv"/> Queue 
+      </Button>
     </div>
   );
 }

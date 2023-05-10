@@ -93,10 +93,10 @@ export default function ViewQueue(props) {
       <br />
       <br />
       <Grid columns={2}>
-        <Grid.Column>
+        <Grid.Column mobile={16} tablet={8} computer={8}>
           <Header as="h1">{data.name}</Header>
         </Grid.Column>
-        <Grid.Column textAlign="right">
+        <Grid.Column textAlign="right" mobile={16} tablet={8} computer={8}>
           <QueueActions queue={data} refreshList={refetch} />
         </Grid.Column>
       </Grid>
@@ -104,8 +104,8 @@ export default function ViewQueue(props) {
       <Divider />
       <br />
 
-      <Grid columns={4}>
-        <Grid.Column>
+      <Grid columns={12}>
+        <Grid.Column mobile={6} tablet={4} computer={2}>
           <Card color="red">
             <Card.Content>
               <Card.Description>Estimated Wait</Card.Description>
@@ -114,10 +114,10 @@ export default function ViewQueue(props) {
           </Card>
         </Grid.Column>
 
-        <Grid.Column>
+        <Grid.Column mobile={6} tablet={4} computer={2}>
           <Card color="teal">
             <Card.Content>
-              <Card.Description>Queue operating hours</Card.Description>
+              <Card.Description>Operating hours</Card.Description>
               <Card.Header>
                 {" "}
                 {data.start_time} - {data.end_time}
@@ -125,7 +125,7 @@ export default function ViewQueue(props) {
             </Card.Content>
           </Card>
         </Grid.Column>
-        <Grid.Column>
+        <Grid.Column mobile={4} tablet={4} computer={2}>
           <Card color="yellow">
             <Card.Content>
               <Card.Description>Group Queue</Card.Description>
@@ -143,7 +143,7 @@ export default function ViewQueue(props) {
       )}
 
       <Grid columns={2}>
-        <Grid.Column>
+        <Grid.Column mobile={16} computer={8} tablet={8}>
           <Segment>
             <Header as="h2">In Queue</Header>
             <Divider />
@@ -151,7 +151,7 @@ export default function ViewQueue(props) {
           </Segment>
         </Grid.Column>
         <Grid.Column>
-          <Segment>
+          <Segment mobile={16} computer={8} tablet={8}>
             <Header as="h2">Out Queue</Header>
             <Divider />
             {outQueue}

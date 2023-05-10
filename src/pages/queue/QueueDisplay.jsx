@@ -14,6 +14,7 @@ import sha256 from "crypto-js/sha256";
 import { useQuery } from "react-query";
 import QueueService from "../../services/QueueService";
 import Loading from "../../components/Loading";
+import QRCode from "react-qr-code";
 
 export default function QueueDisplay() {
   const { id } = useParams();
@@ -23,6 +24,7 @@ export default function QueueDisplay() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
+   
   const {
     data: existingData,
     isLoading: existLoading,
@@ -85,12 +87,19 @@ export default function QueueDisplay() {
     );
   }
 
-  const { currently_serving, estimated_wait_time, groups_in_queue } =
+  const { currently_serving, estimated_wait_time, groups_in_queue,queue_hash } =
     existingData;
+
+     const qrURL =
+    `${window.location.protocol}//${window.location.hostname}/join/` +
+    id +
+    "/" +
+    queue_hash;
+
   return (
     <Segment padded textAlign="center">
-      <Segment inverted>
-        <Statistic size="huge" inverted>
+      <Segment >
+        <Statistic size="huge" >
           <Statistic.Label>Currently Serving</Statistic.Label>
           <Statistic.Value>
             {currently_serving ? "#" + currently_serving : "-"}
@@ -108,7 +117,7 @@ export default function QueueDisplay() {
           </Segment>
         </Grid.Column>
         <Grid.Column>
-          <Segment inverted color="blue">
+          <Segment inverted color="black">
             <Statistic size="huge" inverted>
               <Statistic.Label>Groups in Queue</Statistic.Label>
               <Statistic.Value>{groups_in_queue}</Statistic.Value>
@@ -116,6 +125,11 @@ export default function QueueDisplay() {
           </Segment>
         </Grid.Column>
       </Grid>
+      <Segment padded>
+        <Header as="h2">Scan QR to join the queue</Header>
+    
+        <QRCode value={qrURL}/>
+      </Segment>
     </Segment>
   );
 }

@@ -25,38 +25,30 @@ export default function QueueGroup(props) {
 
   return (
 
-    <Card  color="green">
+    <Card fluid color="green">
       <Card.Content>
         <Card.Header>
           {!alt && (
             <Grid columns={2}>
-              <Grid.Column>
+              <Grid.Column mobile={16} tablet={8} computer={8}>
                 {" "}
                 <Header as="h2">#{group.position_in_queue}</Header>
               </Grid.Column>
-              <Grid.Column textAlign="right">
-                {/* <Button color="blue" icon>
-                  {" "}
-                  <Icon name="phone volume" />
-                </Button> */}
+              <Grid.Column textAlign="right" mobile={16} tablet={8} computer={8}>
                 <Button
                   color="green"
-                  icon
                   onClick={() => moveQueue(group.position_in_queue, false)}
                 >
                   {" "}
                   <Icon name="arrow right" />
+                  To out queue
                 </Button>
               </Grid.Column>
             </Grid>
           )}
           {alt && (
             <Grid columns={2}>
-              <Grid.Column>
-                {/* <Button color="blue" icon>
-                  {" "}
-                  <Icon name="phone volume" />
-                </Button> */}
+              <Grid.Column mobile={16} tablet={8} computer={8}>
                 <Button
                   color="grey"
                   icon
@@ -64,9 +56,10 @@ export default function QueueGroup(props) {
                 >
                   {" "}
                   <Icon name="arrow left" />
+                   To in queue
                 </Button>
               </Grid.Column>
-              <Grid.Column textAlign="right">
+              <Grid.Column textAlign="right" mobile={16} tablet={8} computer={8}>
                 {" "}
                 <Header as="h2">#{group.position_in_queue}</Header>
               </Grid.Column>
