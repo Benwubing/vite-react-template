@@ -22,7 +22,7 @@ import TopNavBar from "../../components/TopNavBar";
 
 export default function QueueList() {
     if (!localStorage.getItem("token")) {
-    return <Navigate to="/login" />;
+    return <Navigate to="/" />;
   }
   const { data, isLoading, refetch } = useQuery(
     "getQueues",

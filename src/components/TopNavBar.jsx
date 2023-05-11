@@ -7,7 +7,7 @@ export default function TopNavBar() {
   const navigate = useNavigate()
   const onLogout = ()=>{
     localStorage.removeItem("token")
-    navigate("/login")
+    navigate("/")
   }
   return (
           <Grid columns={2}>

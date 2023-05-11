@@ -8,6 +8,7 @@ import LeaveQueue from "./pages/leave/LeaveQueue";
 import QueueDisplay from "./pages/queue/QueueDisplay";
 import ViewQueue from "./pages/queue/ViewQueue";
 import { Grid } from "semantic-ui-react";
+import LandingPage from "./pages/landing/LandingPage";
 
 const queryClient = new QueryClient();
 
@@ -16,7 +17,7 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <Grid columns={2} centered>
-          <Grid.Column mobile={16} computer={15}> 
+          <Grid.Column mobile={16} computer={16}> 
             <Routes>
               <Route path="/register" element={<Register />}></Route>
               <Route path="/leave" element={<LeaveQueue />}></Route>
@@ -26,7 +27,7 @@ function App() {
               <Route path="/view/:id" element={<ViewQueue />}></Route>
               <Route path="/home" element={<Home />}></Route>
               <Route path="/login" element={<Login />}></Route>
-              <Route path="/" element={<Login />}></Route>
+              <Route path="/" element={<LandingPage />}></Route>
             </Routes>
         </Grid.Column>
         </Grid>

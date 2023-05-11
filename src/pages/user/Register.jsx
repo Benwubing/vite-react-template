@@ -188,11 +188,11 @@ export default function Register() {
                 color="grey"
                 fluid
                 size="large"
-                onClick={() => navigate("/")}
+                onClick={() => navigate(-1)}
                 disabled={loading}
                 loading={loading}
               >
-                Back to Login
+                Back
               </Button>
 
               {errors.main && (

@@ -5,10 +5,12 @@ import {
   Header,
   Message,
   Segment,
+  Image
 } from "semantic-ui-react";
 import QueueService from "../../services/QueueService";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import imgUrl from '../../assets/queue2.jpeg'
 
 export default function Login() {
   const [username, setUsername] = useState("");
@@ -51,9 +53,12 @@ export default function Login() {
         verticalAlign="middle"
       >
         <Grid.Column style={{ maxWidth: 450 }}>
+         
+         
           <Header as="h2" color="blue" textAlign="center">
             Login to your account
           </Header>
+          <Image src={imgUrl} size='medium' rounded centered/>
           <Form size="large">
             <Form.Input
               fluid
@@ -84,6 +89,7 @@ export default function Login() {
               Login
             </Button>
           </Form>
+          
           {errors && <Message error>{errors}</Message>}
           <Message success>
             New to us? <a href="/register">Sign Up</a>
