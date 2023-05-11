@@ -102,7 +102,6 @@ export default function JoinQueue() {
   };
 
   const onContactTypeChange = (e, data) => {
-    console.log(data.value);
     setContactType(data.value);
   };
 

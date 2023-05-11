@@ -6,6 +6,8 @@ import {
   Message,
   Grid,
   Breadcrumb,
+  Button,
+  Icon
 } from "semantic-ui-react";
 import QueueService from "../../services/QueueService";
 import { useQuery } from "react-query";
@@ -14,6 +16,8 @@ import QueueGroup from "./QueueGroup";
 import { useState } from "react";
 import QueueActions from "./QueueActions";
 import { useNavigate, useParams } from "react-router-dom";
+import MessageModal from "../../components/MessageModal";
+import AddUserForm from "./AddUserForm";
 
 export default function ViewQueue(props) {
   const { id } = useParams();
@@ -55,6 +59,7 @@ export default function ViewQueue(props) {
               alt={false}
               key={a.id}
               group={a}
+              serving={data.next_in_line === a.position_in_queue}
               moveQueue={handleMoveQueue}
             />
           );
@@ -67,12 +72,13 @@ export default function ViewQueue(props) {
 
   const outQueue =
     data.groups && data.groups.inactive && data.groups.inactive.length > 0
-      ? data.groups.inactive.map((a) => {
+      ? data.groups.inactive.sort((a,b)=>b.position_in_queue - a.position_in_queue).map((a) => {
           return (
             <QueueGroup
               alt={true}
               key={a.id}
               group={a}
+              serving={data.next_in_line === a.position_in_queue}
               moveQueue={handleMoveQueue}
             />
           );
@@ -95,10 +101,10 @@ export default function ViewQueue(props) {
       <br />
       <br />
       <Grid columns={2}>
-        <Grid.Column mobile={16} tablet={8} computer={10}>
+        <Grid.Column mobile={16} tablet={8} computer={8}>
           <Header as="h1">{data.name}</Header>
         </Grid.Column>
-        <Grid.Column  mobile={16} tablet={8} computer={6} textAlign="right">
+        <Grid.Column  mobile={16} tablet={8} computer={8} textAlign="right">
           <QueueActions queue={data} refreshList={refetch} />
         </Grid.Column>
       </Grid>
@@ -110,7 +116,7 @@ export default function ViewQueue(props) {
         <Grid.Column mobile={6} tablet={4} computer={2}>
           <Card color="red">
             <Card.Content>
-              <Card.Description>Estimated Wait</Card.Description>
+              <Card.Description>Wait per group</Card.Description>
               <Card.Header>{data.estimated_wait_mins} mins</Card.Header>
             </Card.Content>
           </Card>
@@ -147,7 +153,12 @@ export default function ViewQueue(props) {
       <Grid columns={2}>
         <Grid.Column mobile={16} computer={8} tablet={8}>
           <Segment>
-            <Header as="h2">In Queue</Header>
+            <Grid columns={2}>
+              <Grid.Column> <Header as="h2">In Queue</Header></Grid.Column>
+              <Grid.Column textAlign="right"> 
+                  <AddUserForm id={id} hash={data.queue_hash} group={undefined} afterAdd={refetch} />
+              </Grid.Column>
+            </Grid>
             <Divider />
             {inQueue}
           </Segment>

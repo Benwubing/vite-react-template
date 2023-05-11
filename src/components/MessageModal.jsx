@@ -29,7 +29,7 @@ function MessageModal(props) {
       open={open}
       trigger={button}
     >
-      <Modal.Header>{title}</Modal.Header>
+      <Modal.Header ><b>{title}</b></Modal.Header>
       <Modal.Content>
         <Modal.Description>
           <Header>{subtitle}</Header>
@@ -44,9 +44,13 @@ function MessageModal(props) {
             color={color ? color : "green"}
           />
         )}
-        <Button color="black" onClick={() => setOpen(false)}>
-          {cancelText ? cancelText : "Close"}
-        </Button>
+
+        {cancelText && (
+          <Button color="black" onClick={() => setOpen(false)}>
+                    {cancelText ? cancelText : "Close"}
+                  </Button>
+        )}
+       
       </Modal.Actions>
     </Modal>
   );

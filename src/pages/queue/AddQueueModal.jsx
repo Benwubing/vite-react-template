@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, Icon, Modal, Header, Form } from "semantic-ui-react";
+import { Button, Icon, Modal, Header, Form, Grid, Divider } from "semantic-ui-react";
 import QueueService from "../../services/QueueService";
 
 export default function AddQueueModal(props) {
@@ -11,13 +11,14 @@ export default function AddQueueModal(props) {
   // const [passcode, setPasscode] = useState("");
   const [start_time, setStartTime] = useState("");
   const [end_time, setEndTime] = useState("");
-  const [est_time, setEstTime] = useState("");
+  const [est_time, setEstTime] = useState(1);
   const [groupQueue, setGroupQueue] = useState(false);
 
   function isStringValid(str) {
     return str && str.trim().length !== 0;
   }
   function isValidTime(timeString) {
+    if(timeString.trim().length === 0) return false;
     const pattern = /^([01]\d|2[0-3])?([0-5]\d)?$/;
     return pattern.test(timeString);
   }
@@ -41,11 +42,6 @@ export default function AddQueueModal(props) {
       err.name = "Please enter queue name";
     }
 
-    // if (!isStringValid(passcode)) {
-    //   verdict = false;
-    //   err.passcode = "Please enter a passcode for your queue";
-    // }
-
     if (!isValidTime(start_time)) {
       verdict = false;
       err.start_time = "Please enter valid start time";
@@ -59,6 +55,11 @@ export default function AddQueueModal(props) {
     if (start_time >= end_time) {
       verdict = false;
       err.end_time = "Please enter end time that is after start time";
+    }
+
+    if(est_time.trim().length === 0){
+      verdict=false;
+      err.est_time="Please enter estimated time"
     }
 
     if (!verdict) {
@@ -106,7 +107,7 @@ export default function AddQueueModal(props) {
   const handleEstTime = (e) => {
     const value = e.target.value;
     const pattern = /^\d+$/;
-    if (pattern.test(value)) {
+    if (pattern.test(value) || value.trim().length===0) {
       setEstTime(value);
     }
   };
@@ -128,49 +129,54 @@ export default function AddQueueModal(props) {
       <Modal.Header>Add Queue</Modal.Header>
       <Modal.Content>
         <Modal.Description>
-          <Header>Start by filling up the following information</Header>
+          <Header as="p">Start by filling up the following information</Header>
+          <Divider/>
           <Form size="large">
             <Form.Input
               fluid
+              label={"Queue Name *"}
               onChange={(event) => setName(event.target.value)}
               error={errors.name}
               value={name}
               placeholder="Queue Name"
             />
-            <Form.Input
-              fluid
-              maxLength="4"
-              onChange={handleStartTime}
-              error={errors.start_time}
-              value={start_time}
-              max="2400"
-              placeholder="Start Time (0000 - 2359)"
-            />
-            <Form.Input
-              fluid
-              maxLength="4"
-              onChange={handleEndTime}
-              error={errors.end_time}
-              value={end_time}
-              max="2400"
-              placeholder="End Time (0000 - 2359)"
-            />
+
+            <Grid columns={2}>
+              <Grid.Column>
+                 <Form.Input
+                    fluid
+                    maxLength="4"
+                    label={"Start Time *"}
+                    onChange={handleStartTime}
+                    error={errors.start_time}
+                    value={start_time}
+                    max="2400"
+                    placeholder="Start Time (0000 - 2359)"
+                  />
+              </Grid.Column>
+               <Grid.Column>
+                 <Form.Input
+                    fluid
+                    maxLength="4"
+                    label={"End Time *"}
+                    onChange={handleEndTime}
+                    error={errors.end_time}
+                    value={end_time}
+                    max="2400"
+                    placeholder="End Time (0000 - 2359)"
+                  />
+               </Grid.Column>
+            </Grid><br/>
+        
             <Form.Input
               fluid
               type="number"
+              label={"Estimated wait time in mins per group added*"}
               onChange={handleEstTime}
               error={errors.est_time}
               value={est_time}
-              placeholder="Estimated wait time in mins"
+              placeholder="How much to extend the wait time per participant"
             />
-            {/* <Form.Input
-              fluid
-              onChange={(event) => setPasscode(event.target.value)}
-              error={errors.passcode}
-              value={passcode}
-              placeholder="Passcode used for your queue displays"
-              type="password"
-            /> */}
             <Form.Checkbox
               toggle
               onChange={(e, d) => setGroupQueue(d.checked)}
