@@ -4,6 +4,7 @@ import MessageModal from "../../components/MessageModal";
 import QueueService from "../../services/QueueService";
 import { useState } from "react";
 import { TelegramShareButton,TelegramIcon, WhatsappShareButton, WhatsappIcon, EmailShareButton, EmailIcon } from "react-share";
+import EditQueueModal from "./EditQueueModal";
 
 export default function QueueActions(props) {
   const { queue, refreshList } = props;
@@ -91,8 +92,11 @@ export default function QueueActions(props) {
 
   }
 
+  const compactQueue = queue.attributes?{id:queue.id,...queue.attributes}:queue
+
   return (
     <div>
+      <EditQueueModal queue={compactQueue} refresh={refreshList}/>
       <MessageModal
         size="mini"
         button={
@@ -156,7 +160,7 @@ export default function QueueActions(props) {
             color="black"
             disabled={loading}
           >
-            <Icon name="eraser"/> Clear Queue
+            <Icon name="eraser"/> Clear
           </Button>
         }
         message={""}
@@ -168,7 +172,7 @@ export default function QueueActions(props) {
         confirmText={"Yes, clear all groups"}
       />
       <Button color="purple" className="mb-1" size={"small"} onClick={handleDisplay}>
-       <Icon name="tv"/> Queue 
+       <Icon name="tv"/> Display 
       </Button>
     </div>
   );

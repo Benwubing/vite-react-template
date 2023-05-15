@@ -9,7 +9,7 @@ import {
 } from "semantic-ui-react";
 
 export default function QueueGroup(props) {
-  const { group, alt, moveQueue,serving } = props;
+  const { group, alt, moveQueue,serving,prefix } = props;
 
   const groupMembers = group.group_members.map((m, index) => {
     return (
@@ -31,7 +31,7 @@ export default function QueueGroup(props) {
             <Grid columns={2}>
               <Grid.Column mobile={16} tablet={8} computer={8}>
                 {" "}
-                <Header as="h2">#{group.position_in_queue} {serving ? "(Currently serving)":""}</Header>
+                <Header as="h2">{prefix && prefix.length >0 ? prefix :"#"}{group.position_in_queue} {serving ? "(Currently serving)":""}</Header>
               </Grid.Column>
               <Grid.Column textAlign="right" mobile={16} tablet={8} computer={8}>
                 <Button
@@ -61,7 +61,7 @@ export default function QueueGroup(props) {
               </Grid.Column>
               <Grid.Column textAlign="right" mobile={16} tablet={8} computer={8}>
                 {" "}
-                <Header as="h2">#{group.position_in_queue}  {serving ? "(Currently serving)":""}</Header>
+                <Header as="h2">{prefix && prefix.length>0 ? prefix :"#"}{group.position_in_queue}  {serving ? "(Currently serving)":""}</Header>
               </Grid.Column>
             </Grid>
           )}

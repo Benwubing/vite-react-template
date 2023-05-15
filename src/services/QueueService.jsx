@@ -52,13 +52,15 @@ const QueueService = {
       getHeaders()
     );
   },
-  addQueue(name, st, et, gq, estTime) {
+  addQueue(name, st, et, gq, estTime,prefix,cs) {
     const payload = {
       name: name,
       start_time: st,
       end_time: et,
       group_queue: gq,
       estimated_wait_mins: estTime,
+      prefix:prefix,
+      color_settings:cs
     };
     return authInstance.post(config.add_queue, payload, getHeaders());
   },
@@ -92,12 +94,18 @@ const QueueService = {
       config.exist_in_queue + "?queue=" + id + "&device=" + device
     );
   },
-  updateQueue(id, position, status) {
+  updateQueue(id, position, status,name,est,p,cs) {
     const payload = {
       id: id,
-      position: position,
-      status: status,
     };
+    
+    if(position) payload.position=position
+    if(status) payload.status=status
+    if (name) payload.name=name;
+    if (est) payload.estimated_wait_mins=est;
+    if (p) payload.prefix=p;
+    if (cs) payload.color_settings=cs;
+
     return authInstance.put(config.update_queue, payload, getHeaders());
   },
   enrollDisplay(id, device, passcode) {

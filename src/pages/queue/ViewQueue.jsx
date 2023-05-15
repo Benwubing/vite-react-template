@@ -16,7 +16,6 @@ import QueueGroup from "./QueueGroup";
 import { useState } from "react";
 import QueueActions from "./QueueActions";
 import { useNavigate, useParams } from "react-router-dom";
-import MessageModal from "../../components/MessageModal";
 import AddUserForm from "./AddUserForm";
 
 export default function ViewQueue(props) {
@@ -58,6 +57,7 @@ export default function ViewQueue(props) {
             <QueueGroup
               alt={false}
               key={a.id}
+              prefix={data.prefix}
               group={a}
               serving={data.next_in_line === a.position_in_queue}
               moveQueue={handleMoveQueue}
@@ -78,6 +78,7 @@ export default function ViewQueue(props) {
               alt={true}
               key={a.id}
               group={a}
+              prefix={data.prefix}
               serving={data.next_in_line === a.position_in_queue}
               moveQueue={handleMoveQueue}
             />
@@ -136,8 +137,8 @@ export default function ViewQueue(props) {
         <Grid.Column mobile={4} tablet={4} computer={2}>
           <Card color="yellow">
             <Card.Content>
-              <Card.Description>Group Queue</Card.Description>
-              <Card.Header> {data.group_queue ? "Yes" : "No"}</Card.Header>
+              <Card.Description>Prefix</Card.Description>
+              <Card.Header> {data.prefix ? data.prefix : "#"}</Card.Header>
             </Card.Content>
           </Card>
         </Grid.Column>

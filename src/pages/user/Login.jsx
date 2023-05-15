@@ -10,7 +10,7 @@ import {
 import QueueService from "../../services/QueueService";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import imgUrl from '../../assets/queue2.jpeg'
+import imgUrl from '../../assets/queue3.png'
 
 export default function Login() {
   const [username, setUsername] = useState("");

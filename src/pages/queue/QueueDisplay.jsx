@@ -87,7 +87,7 @@ export default function QueueDisplay() {
     );
   }
 
-  const { currently_serving, estimated_wait_time, groups_in_queue,queue_hash } =
+  const { currently_serving, estimated_wait_time, groups_in_queue,queue_hash,color_settings } =
     existingData;
 
      const qrURL =
@@ -97,39 +97,41 @@ export default function QueueDisplay() {
     queue_hash;
 
   return (
-    <Segment padded textAlign="center" basic >
-      <Segment >
+    <Segment padded textAlign="center" basic style={{background:color_settings[0]}}>
+      <Segment style={{background:color_settings[0]}}>
         <Statistic size="huge" >
-          <Statistic.Label>Currently Serving</Statistic.Label>
-          <Statistic.Value>
+          <Statistic.Label style={{color:color_settings[1]}}>Currently Serving</Statistic.Label>
+          <Statistic.Value style={{color:color_settings[1]}}>
             {currently_serving ? "#" + currently_serving : "-"}
           </Statistic.Value>
         </Statistic>
-        <Header as="h2"> Number might not be called in sequence</Header>
+        <Header as="h2" style={{color:color_settings[1]}}> Number might not be called in sequence</Header>
       </Segment>
-      <Grid columns={2}>
-        <Grid.Column phone={16} tablet={8} computer={8}>
-          <Segment inverted color="yellow">
+      <Grid columns={2} centered>
+        <Grid.Column phone={16} tablet={16} computer={8}>
+          <Segment style={{background:color_settings[2]}} textAlign="center">
             <Statistic size="huge">
-              <Statistic.Label>Estimated wait time</Statistic.Label>
-              <Statistic.Value>{estimated_wait_time} MINS</Statistic.Value>
+              <Statistic.Label style={{color:color_settings[3]}}>Estimated wait time</Statistic.Label>
+              <Statistic.Value style={{color:color_settings[3]}}>{estimated_wait_time} MINS</Statistic.Value>
             </Statistic>
           </Segment>
         </Grid.Column>
-        <Grid.Column phone={16} tablet={8} computer={8}>
-          <Segment inverted color="black">
+        <Grid.Column phone={16} tablet={16} computer={8}>
+          <Segment style={{background:color_settings[4]}} textAlign="center">
             <Statistic size="huge" inverted>
-              <Statistic.Label>Groups in Queue</Statistic.Label>
-              <Statistic.Value>{groups_in_queue}</Statistic.Value>
+              <Statistic.Label style={{color:color_settings[5]}}>Groups in Queue</Statistic.Label>
+              <Statistic.Value style={{color:color_settings[5]}}>{groups_in_queue}</Statistic.Value>
             </Statistic>
           </Segment>
+        </Grid.Column>
+        <Grid.Column phone={16} tablet={16} computer={8} textAlign="center">
+           <Segment padded style={{background:color_settings[6]}}>
+              <Header as="h2" style={{color:color_settings[7]}}>Scan QR to join the queue</Header>
+              <QRCode value={qrURL}/>
+            </Segment>
         </Grid.Column>
       </Grid>
-      <Segment padded>
-        <Header as="h2">Scan QR to join the queue</Header>
-    
-        <QRCode value={qrURL}/>
-      </Segment>
+     
     </Segment>
   );
 }

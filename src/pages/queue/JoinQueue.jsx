@@ -230,7 +230,7 @@ export default function JoinQueue() {
             <Card.Description>
               <Statistic>
                 <Statistic.Value>
-                  #{existingData.position_in_queue}
+                  {existingData.prefix && existingData.prefix.length>0 ? existingData.prefix :"#"}{existingData.position_in_queue}
                 </Statistic.Value>
                 <Statistic.Label>Queue Number</Statistic.Label>
               </Statistic>

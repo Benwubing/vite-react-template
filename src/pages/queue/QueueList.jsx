@@ -53,7 +53,7 @@ export default function QueueList() {
             return (
               <TableRow key={r.id}>
                 <TableCell>
-                  <Link to={"/view/"+r.id}>{attr.name}</Link>
+                  <Link to={"/view/"+r.id}><b>{attr.name}</b></Link>
                 </TableCell>
                 <TableCell>{attr.groups.length}</TableCell>
                 <TableCell>{attr.next_in_line}</TableCell>

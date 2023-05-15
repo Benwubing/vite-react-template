@@ -9,6 +9,7 @@ import QueueDisplay from "./pages/queue/QueueDisplay";
 import ViewQueue from "./pages/queue/ViewQueue";
 import { Grid } from "semantic-ui-react";
 import LandingPage from "./pages/landing/LandingPage";
+import PreviewQueueDisplay from "./pages/queue/PreviewQueueDisplay";
 
 const queryClient = new QueryClient();
 
@@ -21,6 +22,7 @@ function App() {
             <Routes>
               <Route path="/register" element={<Register />}></Route>
               <Route path="/leave" element={<LeaveQueue />}></Route>
+               <Route path="/preview-display" element={<PreviewQueueDisplay />}></Route>
               <Route path="/join/:id/:hash" element={<JoinQueue />}></Route>
               <Route path="/join/:id/:hash/:group" element={<JoinQueue />}></Route>
               <Route path="/display/:id" element={<QueueDisplay />}></Route>
