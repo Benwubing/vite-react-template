@@ -60,13 +60,13 @@ export default function QueueList() {
                 <TableCell>{attr.estimated_wait_mins}</TableCell>
                 <TableCell>{attr.start_time}</TableCell>
                 <TableCell>{attr.end_time}</TableCell>
-                <TableCell>
+                {/* <TableCell>
                   {attr.group_queue ? (
                     <Icon name="check" color="green"></Icon>
                   ) : (
                     <Icon name="delete" color="red"></Icon>
                   )}
-                </TableCell>
+                </TableCell> */}
                 <TableCell>
                   <QueueActions queue={r} refreshList={refetchQueues} />
                 </TableCell>
@@ -105,7 +105,7 @@ export default function QueueList() {
                 <TableHeaderCell>Est. waiting time</TableHeaderCell>
                 <TableHeaderCell>Start Time</TableHeaderCell>
                 <TableHeaderCell>End Time</TableHeaderCell>
-                <TableHeaderCell>Allow Groups</TableHeaderCell>
+                {/* <TableHeaderCell>Allow Groups</TableHeaderCell> */}
                 <TableHeaderCell>Actions</TableHeaderCell>
               </TableRow>
             </TableHeader>

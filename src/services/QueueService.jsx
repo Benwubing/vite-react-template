@@ -94,7 +94,7 @@ const QueueService = {
       config.exist_in_queue + "?queue=" + id + "&device=" + device
     );
   },
-  updateQueue(id, position, status,name,est,p,cs) {
+  updateQueue(id, position, status,name,est,p,cs,st,et) {
     const payload = {
       id: id,
     };
@@ -105,6 +105,8 @@ const QueueService = {
     if (est) payload.estimated_wait_mins=est;
     if (p) payload.prefix=p;
     if (cs) payload.color_settings=cs;
+    if (st) payload.start_time=st;
+    if(et) payload.end_time=et
 
     return authInstance.put(config.update_queue, payload, getHeaders());
   },

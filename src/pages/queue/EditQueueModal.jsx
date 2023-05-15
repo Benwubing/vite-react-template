@@ -12,6 +12,8 @@ export default function EditQueueModal(props) {
   const [open, setOpen] = useState(false);
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
+  const [start_time, setStartTime] = useState(queue.start_time);
+  const [end_time, setEndTime] = useState(queue.end_time);
   const [name, setName] = useState(queue.name);
   const [est_time, setEstTime] = useState(queue.estimated_wait_mins);
   const [prefix,setPrefix] = useState(queue.prefix)
@@ -21,9 +23,12 @@ export default function EditQueueModal(props) {
     return str && str.trim().length !== 0;
   }
 
+  function isValidTime(timeString) {
+    if(timeString.trim().length === 0) return false;
+    const pattern = /^([01]\d|2[0-3])?([0-5]\d)?$/;
+    return pattern.test(timeString);
+  }
   const restartAll = () => {
-    setName("");
-    setEstTime("");
     setGroupQueue(false);
     setColorSettings([...defaultColors])
   };
@@ -43,11 +48,26 @@ export default function EditQueueModal(props) {
       err.est_time="Please enter estimated time"
     }
 
+    if (!isValidTime(start_time)) {
+      verdict = false;
+      err.start_time = "Please enter valid start time";
+    }
+
+    if (!isValidTime(end_time)) {
+      verdict = false;
+      err.end_time = "Please enter valid end time";
+    }
+
+    if (start_time >= end_time) {
+      verdict = false;
+      err.end_time = "Please enter end time that is after start time";
+    }
+
     if (!verdict) {
       setErrors(err);
     } else {
       setErrors({});
-      QueueService.updateQueue(queue.id,undefined,undefined,name,est_time,prefix,colorSettings)
+      QueueService.updateQueue(queue.id,undefined,undefined,name,est_time,prefix,colorSettings,start_time,end_time)
         .then((res) => {
           setLoading(false);
           setOpen(false);
@@ -59,6 +79,29 @@ export default function EditQueueModal(props) {
             setErrors(e.response.data.errors);
           }
         });
+    }
+  };
+
+  const handleStartTime = (e) => {
+    const value = e.target.value;
+    if (value.length === 0) {
+      setStartTime(value);
+      return;
+    }
+    const pattern = /^\d+$/;
+    if (pattern.test(value)) {
+      setStartTime(value);
+    }
+  };
+  const handleEndTime = (e) => {
+    const value = e.target.value;
+    if (value.length === 0) {
+      setEndTime(value);
+      return;
+    }
+    const pattern = /^\d+$/;
+    if (pattern.test(value)) {
+      setEndTime(value);
     }
   };
 
@@ -104,6 +147,33 @@ export default function EditQueueModal(props) {
               value={name}
               placeholder="Queue Name"
             />
+
+             <Grid columns={2}>
+              <Grid.Column>
+                 <Form.Input
+                    fluid
+                    maxLength="4"
+                    label={"Start Time *"}
+                    onChange={handleStartTime}
+                    error={errors.start_time}
+                    value={start_time}
+                    max="2400"
+                    placeholder="Start Time (0000 - 2359)"
+                  />
+              </Grid.Column>
+               <Grid.Column>
+                 <Form.Input
+                    fluid
+                    maxLength="4"
+                    label={"End Time *"}
+                    onChange={handleEndTime}
+                    error={errors.end_time}
+                    value={end_time}
+                    max="2400"
+                    placeholder="End Time (0000 - 2359)"
+                  />
+               </Grid.Column>
+            </Grid><br/>
         
             <Form.Input
               fluid
