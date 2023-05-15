@@ -18,7 +18,7 @@ export default function AddQueueModal(props) {
   const [est_time, setEstTime] = useState("");
   const [groupQueue, setGroupQueue] = useState(false);
   const [prefix,setPrefix] = useState("")
-  const [colorSettings,setColorSettings] = useState(...defaultColors)
+  const [colorSettings,setColorSettings] = useState([...defaultColors])
 
   function isStringValid(str) {
     return str && str.trim().length !== 0;
@@ -36,7 +36,7 @@ export default function AddQueueModal(props) {
     setEndTime("");
     setEstTime("");
     setGroupQueue(false);
-    setColorSettings(...defaultColors)
+    setColorSettings([...defaultColors])
   };
 
   const addQueue = () => {

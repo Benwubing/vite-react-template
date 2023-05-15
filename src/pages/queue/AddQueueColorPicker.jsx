@@ -14,7 +14,7 @@ export default function AddQueueColorPicker(props){
         return brightness > 155;
     }
 
-    const isLight = wc_hex_is_light(color) ? "#333" : "#FFF"
+    const isLight = color?wc_hex_is_light(color) ? "#333333" : "#FFFFFF":"#FFFFFF"
     return (
         <Segment>
              <Header as="h4">{label} </Header>

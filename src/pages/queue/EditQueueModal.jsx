@@ -25,7 +25,7 @@ export default function EditQueueModal(props) {
     setName("");
     setEstTime("");
     setGroupQueue(false);
-    setColorSettings(...defaultColors)
+    setColorSettings([...defaultColors])
   };
 
   const editQueue = () => {
