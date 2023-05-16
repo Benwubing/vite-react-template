@@ -4,10 +4,12 @@ import QueueService from "../../services/QueueService";
 import { BlockPicker } from "react-color";
 import PreviewQueueDisplay from "./PreviewQueueDisplay";
 import AddQueueColorPicker from "./AddQueueColorPicker";
+import ColorTemplatePicker from "../profiles/ColorTemplatePicker";
+
 
 export default function EditQueueModal(props) {
   const {queue} = props
-  const defaultColors = ["#ffffff","#000000","#fbbd08","#000000","#fbbd08","#000000","#ffffff","#000000"]
+  const defaultColors = ["#ffffff","#000000","#fbbd08","#000000","#fbbd08","#000000","#FBBD08","#000000","#fbbd08"]
   const { refresh } = props;
   const [open, setOpen] = useState(false);
   const [errors, setErrors] = useState({});
@@ -198,15 +200,18 @@ export default function EditQueueModal(props) {
                 <Grid.Column> <Header as="h3">Display color settings</Header></Grid.Column>
               </Grid>
               <Divider/>
+              <ColorTemplatePicker onSelected={(c,v)=>setColorSettings(v.value)}/><br/><br/>
                 <Grid columns={2}>
-                    <Grid.Column phone={16} tablet={8} computer={8}>
+                    <Grid.Column phone={16} tablet={16} computer={8}>
                          <Grid columns={2}>
-                            <Grid.Column mobile={16} tablet={8} computer={8}>
+                            <Grid.Column mobile={16} tablet={16} computer={16}>
                                 <AddQueueColorPicker label="Main Background" color={colorSettings[0]} onChange={(c)=>handleSetColor(0,c.hex)}/>
                             </Grid.Column>
+                              <Grid.Column mobile={8} tablet={8} computer={8}>
+                              <AddQueueColorPicker label="Serving Background" color={colorSettings[8]} onChange={(c)=>handleSetColor(8,c.hex)}/>
+                            </Grid.Column>
                              <Grid.Column mobile={16} tablet={8} computer={8}>
-    
-                              <AddQueueColorPicker label="Main Text" color={colorSettings[1]} onChange={(c)=>handleSetColor(1,c.hex)}/>
+                              <AddQueueColorPicker label="Serving Text" color={colorSettings[1]} onChange={(c)=>handleSetColor(1,c.hex)}/>
                             </Grid.Column>
                               <Grid.Column mobile={16} tablet={8} computer={8}>
 
@@ -234,7 +239,7 @@ export default function EditQueueModal(props) {
                           </Grid>
 
                     </Grid.Column>
-                    <Grid.Column phone={16} tablet={8} computer={8}>
+                    <Grid.Column phone={16} tablet={16} computer={8}>
                       <Segment>
                         <Grid columns={2}>
                           <Grid.Column> <Header as="h4">Preview</Header></Grid.Column>

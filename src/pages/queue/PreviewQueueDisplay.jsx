@@ -16,11 +16,11 @@ const [searchParams, setSearchParams] = useSearchParams();
   if(!colors){return <div></div>}
   return (
     <Segment padded textAlign="center" style={{background:colors[0]}} basic>
-      <Segment style={{background:colors[0]}}>
-        <Statistic size={compact?"mini":"huge"} >
-          <Statistic.Label style={{color:colors[1]}}>Currently Serving</Statistic.Label>
+      <Segment style={{background:colors[8]}}>
+        <Statistic size={compact?"small":"huge"} >
+          <Statistic.Label style={{fontSize:compact?"1em":"2em",color:colors[1]}}>Currently Serving</Statistic.Label>
           <Statistic.Value style={{color:colors[1]}}>
-            #101
+            <Header style={{fontSize:compact?"1em":"2em",color:colors[1]}}>#101 </Header>
           </Statistic.Value>
         </Statistic>
         <Header as="h4" style={{color:colors[1]}}> Number might not be called in sequence</Header>
@@ -28,7 +28,7 @@ const [searchParams, setSearchParams] = useSearchParams();
       <Grid columns={2} centered>
         <Grid.Column phone={16} tablet={16} computer={8}>
           <Segment style={{background:colors[2]}} textAlign="center">
-            <Statistic size={compact?"mini":"huge"} >
+            <Statistic size={compact?"mini":"large"} >
               <Statistic.Label style={{color:colors[3]}}>Estimated wait time</Statistic.Label>
               <Statistic.Value style={{color:colors[3]}}>10 MINS</Statistic.Value>
             </Statistic>
@@ -36,7 +36,7 @@ const [searchParams, setSearchParams] = useSearchParams();
         </Grid.Column>
         <Grid.Column phone={16} tablet={16} computer={8} >
           <Segment style={{background:colors[4]}} textAlign="center">
-            <Statistic size={compact?"mini":"huge"} >
+            <Statistic size={compact?"mini":"large"} >
               <Statistic.Label style={{color:colors[5]}}>Groups in Queue</Statistic.Label>
               <Statistic.Value style={{color:colors[5]}}>5</Statistic.Value>
             </Statistic>

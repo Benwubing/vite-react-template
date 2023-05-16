@@ -54,3 +54,7 @@ code {
 .mb-1{
   margin-bottom: 0.4rem !important;
 }
+
+.content-container{
+  min-height:75vh;
+}

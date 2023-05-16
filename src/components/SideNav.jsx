@@ -1,28 +1,29 @@
-import React, { Component } from 'react'
-import { Menu } from 'semantic-ui-react'
+import React from 'react'
+import { useNavigate } from 'react-router-dom'
+import { Menu,Sidebar,Icon } from 'semantic-ui-react'
 
-export default class SideNav extends Component {
-  state = {}
-  handleItemClick = (e,  name ) => this.setState({ activeItem: name })
-
-  render() {
-    const { activeItem } = this.state
-
+export default function SideNav (props){
+    const {visible,setVisible} = props
+    const navigate = useNavigate();
     return (
-      <Menu vertical>
-        <Menu.Item>
-          <Menu.Header>Queues</Menu.Header>
-
-          <Menu.Menu>
-            <Menu.Item
-                icon="list"
-              name={"My Queues"}
-              active={activeItem === 'My Queues'}
-              onClick={(e)=>this.handleItemClick(e,"home")}
-            />
-          </Menu.Menu>
-        </Menu.Item>
-      </Menu>
+     <Sidebar
+            as={Menu}
+            animation='overlay'
+            icon='labeled'
+            inverted
+            onHide={() => setVisible(false)}
+            vertical
+            visible={visible}
+            width='thin'
+          >
+            <Menu.Item as='a' onClick={()=>navigate("/home")}>
+              <Icon name='home' />
+              Home
+            </Menu.Item>
+            <Menu.Item as='a'  onClick={()=>navigate("/profile")}>
+              <Icon name='user'/>
+              Profile
+            </Menu.Item>
+          </Sidebar>
     )
   }
-}

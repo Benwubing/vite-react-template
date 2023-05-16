@@ -7,19 +7,23 @@ import {
   Grid,
   Breadcrumb,
   Button,
-  Icon
+  Icon,
+  Sidebar
 } from "semantic-ui-react";
 import QueueService from "../../services/QueueService";
 import { useQuery } from "react-query";
 import Loading from "../../components/Loading";
 import QueueGroup from "./QueueGroup";
-import { useState } from "react";
+import React, { useState } from "react";
 import QueueActions from "./QueueActions";
 import { useNavigate, useParams } from "react-router-dom";
 import AddUserForm from "./AddUserForm";
+import TopNavBar from "../../components/TopNavBar";
+import SideNav from "../../components/SideNav";
 
 export default function ViewQueue(props) {
   const { id } = useParams();
+   const [visible, setVisible] = useState(false)
   const [errors, setErrors] = useState();
   const navigate=useNavigate();
 
@@ -91,7 +95,17 @@ export default function ViewQueue(props) {
         ];
 
   return (
-    <Segment basic >
+
+     <React.Fragment>
+      <Grid columns={1} padded>
+      <Grid.Column>
+        <TopNavBar visible={visible} setVisible={setVisible}/>
+      </Grid.Column>
+      <Grid.Column>
+        <Sidebar.Pushable as={Segment}>
+          <SideNav visible={visible} setVisible={setVisible}/>
+          <Sidebar.Pusher className="content-container" dimmed={visible}>
+           <Segment basic >
       <Breadcrumb>
         <Breadcrumb.Section onClick={()=>navigate("/home")} link>
           My Queues
@@ -173,5 +187,12 @@ export default function ViewQueue(props) {
         </Grid.Column>
       </Grid>
     </Segment>
+          </Sidebar.Pusher>
+        </Sidebar.Pushable>
+      </Grid.Column>
+      </Grid>
+    </React.Fragment>
+
+    
   );
 }

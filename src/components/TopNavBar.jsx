@@ -2,8 +2,8 @@ import { Button, Grid, Header, Icon, Segment } from "semantic-ui-react";
 import MessageModal from "./MessageModal";
 import { useNavigate } from "react-router-dom";
 
-export default function TopNavBar() {
-
+export default function TopNavBar(props) {
+  const {visible,setVisible} = props
   const navigate = useNavigate()
   const onLogout = ()=>{
     localStorage.removeItem("token")
@@ -12,8 +12,11 @@ export default function TopNavBar() {
   return (
           <Grid columns={2}>
             <Grid.Column>
-               <Header as="h3"><Icon name="chess king"/>QMS (BETA)</Header>
+              <Button.Group vertical labeled icon>
+             <Button color="black" basic={visible} onClick={()=>setVisible(!visible)} icon="list" content="QMS Beta" />
+              </Button.Group>
             </Grid.Column>
+            
             <Grid.Column textAlign="right">
                 <MessageModal
                     size="mini"

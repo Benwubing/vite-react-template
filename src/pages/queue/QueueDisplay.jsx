@@ -87,7 +87,7 @@ export default function QueueDisplay() {
     );
   }
 
-  const { currently_serving, estimated_wait_time, groups_in_queue,queue_hash,color_settings } =
+  const { currently_serving, estimated_wait_time, groups_in_queue,queue_hash,color_settings,prefix } =
     existingData;
 
      const qrURL =
@@ -98,11 +98,11 @@ export default function QueueDisplay() {
 
   return (
     <Segment padded textAlign="center" basic style={{background:color_settings[0]}}>
-      <Segment style={{background:color_settings[0]}}>
+      <Segment style={{background:color_settings[8]}}>
         <Statistic size="huge" >
-          <Statistic.Label style={{color:color_settings[1]}}>Currently Serving</Statistic.Label>
+          <Statistic.Label style={{fontSize:"2em",color:color_settings[1]}}>Currently Serving</Statistic.Label>
           <Statistic.Value style={{color:color_settings[1]}}>
-            {currently_serving ? "#" + currently_serving : "-"}
+            <Header style={{fontSize:"2em",color:color_settings[1]}}>{prefix?prefix:"#"}{currently_serving ? "#" + currently_serving : "-"} </Header>
           </Statistic.Value>
         </Statistic>
         <Header as="h2" style={{color:color_settings[1]}}> Number might not be called in sequence</Header>

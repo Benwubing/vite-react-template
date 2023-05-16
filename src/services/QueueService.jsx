@@ -123,6 +123,14 @@ const QueueService = {
   },
   deleteGroups(id){
     return authInstance.delete(config.delete_groups+id+"/", getHeaders());
+  },
+  saveSettings(cs){
+    const payload={};
+    if (cs) payload.color_settings=cs;
+    return authInstance.post(config.update_settings,payload,getHeaders());
+  },
+  getSettings(){
+    return authInstance.get(config.get_settings,getHeaders());
   }
 };
 

@@ -8,7 +8,6 @@ import {
   TableRow,
   Segment,
   Table,
-  Icon,
 } from "semantic-ui-react";
 
 import { useQuery } from "react-query";
@@ -83,7 +82,6 @@ export default function QueueList() {
       : [];
   return (
     <div>
-      <TopNavBar/>
       <Header as="h1">My Queues</Header>
       <Divider />
 

@@ -1,13 +1,14 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { Button, Icon, Modal, Header, Form, Grid, Divider,Segment } from "semantic-ui-react";
 import QueueService from "../../services/QueueService";
 import { BlockPicker } from "react-color";
 import PreviewQueueDisplay from "./PreviewQueueDisplay";
 import AddQueueColorPicker from "./AddQueueColorPicker";
+import ColorTemplatePicker from "../profiles/ColorTemplatePicker";
 
 export default function AddQueueModal(props) {
   const { refresh } = props;
-  const defaultColors = ["#ffffff","#000000","#fbbd08","#000000","#fbbd08","#000000","#ffffff","#000000"]
+  const defaultColors = ["#ffffff","#000000","#fbbd08","#000000","#fbbd08","#000000","#FBBD08","#000000","#fbbd08"]
   const [open, setOpen] = useState(false);
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
@@ -18,7 +19,7 @@ export default function AddQueueModal(props) {
   const [est_time, setEstTime] = useState("");
   const [groupQueue, setGroupQueue] = useState(false);
   const [prefix,setPrefix] = useState("")
-  const [colorSettings,setColorSettings] = useState([...defaultColors])
+  const [colorSettings,setColorSettings] = useState()
 
   function isStringValid(str) {
     return str && str.trim().length !== 0;
@@ -28,6 +29,17 @@ export default function AddQueueModal(props) {
     const pattern = /^([01]\d|2[0-3])?([0-5]\d)?$/;
     return pattern.test(timeString);
   }
+
+  useEffect(()=>{
+    QueueService.getSettings().then((res)=>{
+      const {data} = res;
+      if(data && data.color_settings){
+        setColorSettings(data.color_settings)
+      }else{
+        setColorSettings([...defaultColors])
+      }
+    })
+  },[])
 
   const restartAll = () => {
     setName("");
@@ -200,49 +212,49 @@ export default function AddQueueModal(props) {
               placeholder=".e.g. If this is A, queue will start with A101"
             />
             <Segment basic>
-              <Grid columns={2}>
-                <Grid.Column> <Header as="h3">Display color settings</Header></Grid.Column>
-                 
-              </Grid>
+              <Header as="h3">Display color settings</Header>
               <Divider/>
-                <Grid columns={2}>
-                    <Grid.Column phone={16} tablet={8} computer={8}>
+              <ColorTemplatePicker onSelected={(c,v)=>setColorSettings(v.value)}/><br/><br/>
+              {colorSettings && (
+
+                <Grid >
+                    <Grid.Column phone={16} tablet={16} computer={8}>
                          <Grid columns={2}>
-                            <Grid.Column mobile={16} tablet={8} computer={8}>
+                            <Grid.Column mobile={16} tablet={16} computer={16}>
                                 <AddQueueColorPicker label="Main Background" color={colorSettings[0]} onChange={(c)=>handleSetColor(0,c.hex)}/>
                             </Grid.Column>
-                             <Grid.Column mobile={16} tablet={8} computer={8}>
-    
-                              <AddQueueColorPicker label="Main Text" color={colorSettings[1]} onChange={(c)=>handleSetColor(1,c.hex)}/>
+                            <Grid.Column mobile={8} tablet={8} computer={8}>
+                              <AddQueueColorPicker label="Serving Background" color={colorSettings[8]} onChange={(c)=>handleSetColor(8,c.hex)}/>
                             </Grid.Column>
-                              <Grid.Column mobile={16} tablet={8} computer={8}>
+                             <Grid.Column mobile={8} tablet={8} computer={8}>
+                              <AddQueueColorPicker label="Serving Text" color={colorSettings[1]} onChange={(c)=>handleSetColor(1,c.hex)}/>
+                            </Grid.Column>
+                              <Grid.Column mobile={8} tablet={8} computer={8}>
 
                               <AddQueueColorPicker label="Est Time Background" color={colorSettings[2]} onChange={(c)=>handleSetColor(2,c.hex)}/>
                             </Grid.Column>
-                              <Grid.Column mobile={16} tablet={8} computer={8}>
+                              <Grid.Column mobile={8} tablet={8} computer={8}>
 
                               <AddQueueColorPicker label="Est Time Text" color={colorSettings[3]} onChange={(c)=>handleSetColor(3,c.hex)}/>
                             </Grid.Column>
-                            <Grid.Column mobile={16} tablet={8} computer={8}>
+                            <Grid.Column mobile={8} tablet={8} computer={8}>
 
                               <AddQueueColorPicker label="Groups Background" color={colorSettings[4]} onChange={(c)=>handleSetColor(4,c.hex)}/>
                             </Grid.Column>
-                             <Grid.Column mobile={16} tablet={8} computer={8}>
+                             <Grid.Column mobile={8} tablet={8} computer={8}>
 
                               <AddQueueColorPicker label="Groups Text" color={colorSettings[5]} onChange={(c)=>handleSetColor(5,c.hex)}/>
                             </Grid.Column>
-                            <Grid.Column mobile={16} tablet={8} computer={8}>
+                            <Grid.Column mobile={8} tablet={8} computer={8}>
 
                               <AddQueueColorPicker label="QR Background" color={colorSettings[6]} onChange={(c)=>handleSetColor(6,c.hex)}/>
                             </Grid.Column>
-                            <Grid.Column mobile={16} tablet={8} computer={8}>
+                            <Grid.Column mobile={8} tablet={8} computer={8}>
                               <AddQueueColorPicker label="QR Text" color={colorSettings[7]} onChange={(c)=>handleSetColor(7,c.hex)}/>
                             </Grid.Column>
                           </Grid>
-
                     </Grid.Column>
-                    <Grid.Column phone={16} tablet={8} computer={8}>
-      
+                    <Grid.Column phone={16} tablet={16} computer={8}>
                       <Segment>
                         <Grid columns={2}>
                           <Grid.Column> <Header as="h4">Preview</Header></Grid.Column>
@@ -250,10 +262,9 @@ export default function AddQueueModal(props) {
                         </Grid>
                          <PreviewQueueDisplay colors={colorSettings} compact={true}/>
                       </Segment>
-                    
-                     
                     </Grid.Column>
                 </Grid>
+              )}
             </Segment>
            
           </Form>
